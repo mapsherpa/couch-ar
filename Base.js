@@ -14,6 +14,33 @@ module.exports = function(db, name, config) {
     that.db = function() {
       return db;
     }
+    
+    that.setAttachment = function(opts, callback) {
+      if (!callback) {
+        throw new Error('setAttachment called without callback function.');
+      }
+      opts = opts || {};
+      if (!opts['name']) {
+        return callback("Attachment name not specified");
+      }
+      if (!opts['contentType']) {
+        return callback("Attachment content type not specified");
+      }
+      if (!opts['body']) {
+        return callback("Attachment name body not specified");
+      }
+      db.saveAttachement(this.id, opts, callback);
+    }
+    
+    that.getAttachment = function(name, callback) {
+      if (!this['_attachments']) {
+        return callback('Document has no attachments');
+      }
+      if (!this._attachments[name]) {
+        return callback('Document is missing attachment ' + name);
+      }
+      return db.getAttachment(this.id, name, function() {});
+    }
 
     that.serialize = function() {
         var obj = Object.getOwnPropertyNames(config.properties).reduce(function(obj, prop) {
