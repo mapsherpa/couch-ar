@@ -11,6 +11,9 @@ module.exports = function(db, name, config) {
     configureHasMany();
     configureHasOne();
 
+    that.db = function() {
+      return db;
+    }
 
     that.serialize = function() {
         var obj = Object.getOwnPropertyNames(config.properties).reduce(function(obj, prop) {
