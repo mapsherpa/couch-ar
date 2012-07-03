@@ -15,7 +15,7 @@ module.exports = function(db, name, config) {
       return db;
     }
     
-    that.setAttachment = function(opts, callback) {
+    that.saveAttachment = function(opts, callback) {
       if (!callback) {
         throw new Error('setAttachment called without callback function.');
       }
@@ -29,7 +29,7 @@ module.exports = function(db, name, config) {
       if (!opts['body']) {
         return callback("Attachment name body not specified");
       }
-      db.saveAttachement(this.id, opts, callback);
+      db.saveAttachment(this.id, opts, callback);
     }
     
     that.getAttachment = function(name, callback) {
@@ -39,7 +39,7 @@ module.exports = function(db, name, config) {
       if (!this._attachments[name]) {
         return callback('Document is missing attachment ' + name);
       }
-      return db.getAttachment(this.id, name, function() {});
+      return callback(null, db.getAttachment(this.id, name, function() {}));
     }
 
     that.serialize = function() {
