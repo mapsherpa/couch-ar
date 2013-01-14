@@ -56,7 +56,10 @@ exports.init = function(config, callback) {
 
         var filenames = fs.readdirSync(config.root);
         filenames.forEach(function(filename) {
-            /\.js$/.test(filename) && require(config.root + '/' + filename)  && db.domainsToLoad ++;
+                if (/\.js$/.test(filename)) {
+                    db.domainsToLoad++;
+                    require(config.root + '/' + filename)();
+                }
         });
         if (timeout) {
             timer = setTimeout(function(){
