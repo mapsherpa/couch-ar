@@ -77,8 +77,7 @@ exports.init = function(config, callback) {
 exports.create = function(name, config, constr) {
     config.dbName = config.dbName || defaultDbName;
     var db = databases[config.dbName];
-    console.log('Adding to domain: ' + name);
-
+    
     config.properties.dateCreated = {};
     config.properties.lastUpdated = {};
 
